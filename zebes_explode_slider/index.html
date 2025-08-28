@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zebes Explosion Slider</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Planet Zebes Destruction Sequence</h1>
+        
+        <div class="slider-container">
+            <div class="slider" id="zebesSlider">
+                <!-- Space background with stars -->
+                <div class="space-background">
+                    <!-- Stars scattered across space -->
+                    <div class="star star-1"></div>
+                    <div class="star star-2"></div>
+                    <div class="star star-3"></div>
+                    <div class="star star-4"></div>
+                    <div class="star star-5"></div>
+                    <div class="star star-6"></div>
+                    <div class="star star-7"></div>
+                    <div class="star star-8"></div>
+                    <div class="star star-9"></div>
+                    <div class="star star-10"></div>
+                    <div class="star star-11"></div>
+                    <div class="star star-12"></div>
+                    
+                    <!-- Distant stars for depth -->
+                    <div class="distant-star distant-1"></div>
+                    <div class="distant-star distant-2"></div>
+                    <div class="distant-star distant-3"></div>
+                    <div class="distant-star distant-4"></div>
+                    <div class="distant-star distant-5"></div>
+                    <div class="distant-star distant-6"></div>
+                </div>
+                
+                <!-- Explosion particles -->
+                <div class="explosion-container">
+                    <div class="explosion-particle particle-1"></div>
+                    <div class="explosion-particle particle-2"></div>
+                    <div class="explosion-particle particle-3"></div>
+                    <div class="explosion-particle particle-4"></div>
+                    <div class="explosion-particle particle-5"></div>
+                    <div class="explosion-particle particle-6"></div>
+                    <div class="explosion-particle particle-7"></div>
+                    <div class="explosion-particle particle-8"></div>
+                    <div class="explosion-particle particle-9"></div>
+                    <div class="explosion-particle particle-10"></div>
+                    <div class="explosion-particle particle-11"></div>
+                    <div class="explosion-particle particle-12"></div>
+                </div>
+                
+                <!-- Flash effect for explosion -->
+                <div class="explosion-flash"></div>
+                
+                <!-- Persistent explosion aftermath - positioned relative to slider -->
+                <div class="explosion-aftermath"></div>
+                
+                <!-- Slider knob (Zebes planet) -->
+                <div class="slider-knob" id="sliderKnob">
+                    <div class="zebes-planet">
+                        <img src="zebes.png" alt="Planet Zebes" class="zebes-image">
+                        <div class="planet-glow"></div>
+                    </div>
+                    
+                    <!-- Explosion effects on the planet -->
+                    <div class="planet-explosion">
+                        <div class="explosion-ring ring-1"></div>
+                        <div class="explosion-ring ring-2"></div>
+                        <div class="explosion-ring ring-3"></div>
+                        <div class="explosion-core"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <p class="description">⚠️ WARNING: Drag to initiate planet destruction sequence! ⚠️</p>
+        <p class="sub-description">Samus has escaped... Zebes will self-destruct in T-minus...</p>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

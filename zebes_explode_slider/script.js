@@ -15,16 +15,11 @@ class ZebesExplosionSlider {
         this.bindEvents();
         this.updateSliderRect();
         
-        // Ensure core and background are hidden on startup
+        // Ensure core is hidden on startup
         const aftermath = document.querySelector('.explosion-aftermath');
-        const aftermathBg = document.querySelector('.explosion-aftermath-bg');
         if (aftermath) {
             aftermath.style.opacity = '0';
             aftermath.style.display = 'none';
-        }
-        if (aftermathBg) {
-            aftermathBg.style.opacity = '0';
-            aftermathBg.style.display = 'none';
         }
         
         this.setPosition(0, false);
@@ -131,38 +126,34 @@ class ZebesExplosionSlider {
         // Planet gradually fades in as we drag back left after explosion
         let planetOpacity;
         if (this.explosionTriggered) {
-            // If explosion happened, planet fades in from 30% to 0% position
-            planetOpacity = Math.max(0, 1 - ((0.3 - position) * 3.33)); // Fades in from 30% to 0%
+            // Planet only starts appearing when we're at 15% or less (halfway back)
+            // And only when core is fading out
+            if (position <= 0.15) {
+                planetOpacity = Math.max(0, 1 - ((0.15 - position) * 6.67)); // Fades in from 15% to 0%
+            } else {
+                planetOpacity = 0; // Completely hidden until 15%
+            }
         } else {
             planetOpacity = 1; // Normal visibility when no explosion
         }
         const planetScale = 1;
         
-        // Update core and background position if explosion has happened
+        // Update core position if explosion has happened
         const aftermath = document.querySelector('.explosion-aftermath');
-        const aftermathBg = document.querySelector('.explosion-aftermath-bg');
-        if (this.explosionTriggered && aftermath && aftermathBg) {
+        if (this.explosionTriggered && aftermath) {
             const knobX = this.padding + (this.currentPosition * this.maxPosition);
             const knobCenterX = knobX + (this.knobWidth / 2);
             
-            // Update both core and background position
+            // Update core position
             aftermath.style.left = `${knobCenterX}px`;
-            aftermathBg.style.left = `${knobCenterX}px`;
             
-            // Both fade out as we drag back left
+            // Core fades out as we drag back left
             const coreOpacity = Math.max(0, (position - 0.2) * 2.5); // Fades from 20% to 0%
             aftermath.style.opacity = coreOpacity;
-            aftermathBg.style.opacity = coreOpacity * 0.7; // Background is a bit dimmer
-        } else {
-            // Hide both completely if no explosion
-            if (aftermath) {
-                aftermath.style.opacity = '0';
-                aftermath.style.display = 'none';
-            }
-            if (aftermathBg) {
-                aftermathBg.style.opacity = '0';
-                aftermathBg.style.display = 'none';
-            }
+        } else if (aftermath) {
+            // Hide core completely if no explosion
+            aftermath.style.opacity = '0';
+            aftermath.style.display = 'none';
         }
         
         this.slider.style.setProperty('--planet-opacity', planetOpacity);
@@ -212,13 +203,8 @@ class ZebesExplosionSlider {
         const knobX = this.padding + (this.currentPosition * this.maxPosition);
         const knobCenterX = knobX + (this.knobWidth / 2);
         const aftermath = document.querySelector('.explosion-aftermath');
-        const aftermathBg = document.querySelector('.explosion-aftermath-bg');
-        if (aftermath && aftermathBg) {
-            // Show both background and core
-            aftermathBg.style.display = 'block';
-            aftermathBg.style.left = `${knobCenterX}px`;
-            aftermathBg.style.opacity = '0.7';
-            
+        if (aftermath) {
+            // Show core only
             aftermath.style.display = 'block';
             aftermath.style.left = `${knobCenterX}px`;
             aftermath.style.opacity = '1';
@@ -317,14 +303,9 @@ class ZebesExplosionSlider {
         this.slider.style.setProperty('--explosion-rings-opacity', '0');
         this.slider.style.setProperty('--flash-opacity', '0');
         const aftermath = document.querySelector('.explosion-aftermath');
-        const aftermathBg = document.querySelector('.explosion-aftermath-bg');
         if (aftermath) {
             aftermath.style.opacity = '0';
             aftermath.style.display = 'none';
-        }
-        if (aftermathBg) {
-            aftermathBg.style.opacity = '0';
-            aftermathBg.style.display = 'none';
         }
         
         const particles = document.querySelectorAll('.explosion-particle');

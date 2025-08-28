@@ -1,0 +1,363 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* background: linear-gradient(135deg, #667eea 0%, #004466 100%); */
+    background: #333333;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    text-align: center;
+    color: white;
+}
+
+h1 {
+    margin-bottom: 40px;
+    font-size: 2.5em;
+    font-weight: 300;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.slider-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.slider {
+    position: relative;
+    width: 300px;
+    height: 150px;
+    background: var(--bg-color, #A8D8EA);
+    border-radius: 75px;
+    border: 8px solid #f0f0f0;
+    box-shadow: 
+        0 8px 32px rgba(0,0,0,0.3),
+        inset 0 2px 8px rgba(255,255,255,0.3);
+    overflow: hidden;
+    cursor: pointer;
+    transition: background 0.1s ease;
+}
+
+.slider.night-mode {
+    border-color: #34495e;
+}
+
+/* Gradient layers as separate elements */
+.slider::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle 80px at 25% 50%, #87CEEB 0%, #87CEEB 60%, transparent 100%),
+        radial-gradient(circle 100px at 22% 50%, #98D8E8 0%, #98D8E8 50%, transparent 100%),
+        radial-gradient(circle 120px at 20% 50%, #B0E0E6 0%, #B0E0E6 40%, transparent 100%),
+        radial-gradient(circle 140px at 18% 50%, #C0E8F0 0%, #C0E8F0 30%, transparent 100%);
+    opacity: 1;
+    transition: all 0.8s ease;
+    pointer-events: none;
+}
+
+.slider.night-mode::before {
+    background: 
+        radial-gradient(circle 80px at 75% 50%, #2c2c2c 0%, #2c2c2c 60%, transparent 100%),
+        radial-gradient(circle 100px at 78% 50%, #3d3d3d 0%, #3d3d3d 50%, transparent 100%),
+        radial-gradient(circle 120px at 80% 50%, #4a4a4a 0%, #4a4a4a 40%, transparent 100%),
+        radial-gradient(circle 140px at 82% 50%, #5a5a5a 0%, #5a5a5a 30%, transparent 100%);
+}
+
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Clouds */
+.cloud {
+    position: absolute;
+    background: white;
+    border-radius: 50px;
+    opacity: 0.95;
+    transition: all 0.8s ease;
+}
+
+.cloud::before,
+.cloud::after {
+    content: '';
+    position: absolute;
+    background: white;
+    border-radius: 50px;
+}
+
+/* Large cloud spanning left side bottom */
+.cloud-1 {
+    width: 120px;
+    height: 40px;
+    bottom: 15px;
+    left: -20px;
+    animation: float 8s ease-in-out infinite;
+}
+
+.cloud-1::before {
+    width: 45px;
+    height: 45px;
+    top: -20px;
+    left: 20px;
+}
+
+.cloud-1::after {
+    width: 55px;
+    height: 55px;
+    top: -25px;
+    right: 15px;
+}
+
+/* Medium cloud in center-bottom */
+.cloud-2 {
+    width: 80px;
+    height: 30px;
+    bottom: 20px;
+    left: 80px;
+    animation: float 10s ease-in-out infinite reverse;
+}
+
+.cloud-2::before {
+    width: 35px;
+    height: 35px;
+    top: -15px;
+    left: 15px;
+}
+
+.cloud-2::after {
+    width: 40px;
+    height: 40px;
+    top: -18px;
+    right: 10px;
+}
+
+/* Small cloud on right bottom */
+.cloud-3 {
+    width: 60px;
+    height: 25px;
+    bottom: 25px;
+    right: -10px;
+    animation: float 9s ease-in-out infinite;
+}
+
+.cloud-3::before {
+    width: 25px;
+    height: 25px;
+    top: -10px;
+    left: 10px;
+}
+
+.cloud-3::after {
+    width: 30px;
+    height: 30px;
+    top: -12px;
+    right: 8px;
+}
+
+.cloud {
+    opacity: var(--cloud-opacity, 0.95);
+    transition: opacity 0.1s ease, transform 0.1s ease;
+}
+
+.slider.night-mode .cloud {
+    transform: translateY(30px);
+}
+
+/* Stars */
+.stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: var(--star-opacity, 0);
+    transition: opacity 0.1s ease;
+}
+
+.star {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle 2s ease-in-out infinite alternate;
+}
+
+.star::before {
+    content: '';
+    position: absolute;
+    width: 1px;
+    height: 8px;
+    background: white;
+    left: 1px;
+    top: -2.5px;
+}
+
+.star::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 1px;
+    background: white;
+    left: -2.5px;
+    top: 1px;
+}
+
+.star-1 { top: 20px; left: 50px; animation-delay: 0s; }
+.star-2 { top: 35px; right: 60px; animation-delay: 0.3s; }
+.star-3 { top: 60px; left: 30px; animation-delay: 0.6s; }
+.star-4 { top: 80px; right: 40px; animation-delay: 0.9s; }
+.star-5 { top: 45px; left: 80px; animation-delay: 1.2s; }
+.star-6 { top: 25px; right: 90px; animation-delay: 1.5s; }
+.star-7 { top: 70px; right: 80px; animation-delay: 1.8s; }
+.star-8 { top: 90px; left: 70px; animation-delay: 2.1s; }
+
+/* Slider Track - Hidden */
+.slider-track {
+    display: none;
+}
+
+/* Slider Knob */
+.slider-knob {
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    background: var(--knob-color, #FFD700);
+    border-radius: 50%;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+    box-shadow: 
+        0 4px 20px rgba(0,0,0,0.3),
+        inset 0 2px 8px rgba(255,255,255,0.3);
+    cursor: grab;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), left 0.6s cubic-bezier(0.4, 0, 0.2, 1), background 0.1s ease;
+    z-index: 10;
+}
+
+.slider-knob:active {
+    cursor: grabbing;
+    transform: translateY(-50%) scale(1.05);
+}
+
+
+
+/* Sun */
+.sun {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: inherit;
+    opacity: var(--sun-opacity, 1);
+    transition: opacity 0.1s ease, transform 0.1s ease;
+}
+
+.slider-knob.night-mode .sun {
+    transform: scale(0.8);
+}
+
+/* Moon */
+.moon {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    opacity: var(--moon-opacity, 0);
+    transform: scale(0.8);
+    transition: opacity 0.1s ease, transform 0.1s ease;
+}
+
+.slider-knob.night-mode .moon {
+    transform: scale(1);
+}
+
+.crater {
+    position: absolute;
+    background: #A0A0A0;
+    border-radius: 50%;
+    transition: all 0.6s ease;
+}
+
+.crater-1 {
+    width: 12px;
+    height: 12px;
+    top: 25px;
+    left: 30px;
+}
+
+.crater-2 {
+    width: 8px;
+    height: 8px;
+    top: 45px;
+    right: 25px;
+}
+
+.crater-3 {
+    width: 6px;
+    height: 6px;
+    bottom: 30px;
+    left: 35px;
+}
+
+/* Animations */
+@keyframes float {
+    0%, 100% { transform: translateY(0px) translateX(0px); }
+    25% { transform: translateY(-3px) translateX(2px); }
+    50% { transform: translateY(-6px) translateX(0px); }
+    75% { transform: translateY(-3px) translateX(-2px); }
+}
+
+@keyframes twinkle {
+    0% { opacity: 0.3; transform: scale(1); }
+    100% { opacity: 1; transform: scale(1.2); }
+}
+
+
+
+.description {
+    font-size: 1.2em;
+    opacity: 0.9;
+    font-weight: 300;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .slider {
+        width: 250px;
+        height: 125px;
+        border-radius: 62.5px;
+    }
+    
+    .slider-knob {
+        width: 75px;
+        height: 75px;
+    }
+    
+    .slider-knob.night-mode {
+        left: calc(100% - 95px);
+    }
+    
+    h1 {
+        font-size: 2em;
+    }
+}

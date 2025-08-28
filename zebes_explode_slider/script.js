@@ -14,6 +14,17 @@ class ZebesExplosionSlider {
     init() {
         this.bindEvents();
         this.updateSliderRect();
+        
+        // Ensure core is hidden on startup - try multiple methods
+        const aftermath = document.querySelector('.explosion-aftermath');
+        if (aftermath) {
+            aftermath.style.opacity = '0';
+            aftermath.style.display = 'none';
+            console.log('Core hidden on init:', aftermath.style.opacity);
+        } else {
+            console.log('Core element not found on init!');
+        }
+        
         this.setPosition(0, false);
         window.addEventListener('resize', () => {
             this.updateSliderRect();
@@ -28,6 +39,13 @@ class ZebesExplosionSlider {
         document.addEventListener('touchmove', this.onDragMove.bind(this), { passive: false });
         document.addEventListener('touchend', this.onDragEnd.bind(this));
         this.slider.addEventListener('click', this.onSliderClick.bind(this));
+        
+        // Make the aftermath core draggable too
+        const aftermath = document.querySelector('.explosion-aftermath');
+        if (aftermath) {
+            aftermath.addEventListener('mousedown', this.onDragStart.bind(this));
+            aftermath.addEventListener('touchstart', this.onDragStart.bind(this), { passive: false });
+        }
     }
     
     updateSliderRect() {
@@ -111,6 +129,22 @@ class ZebesExplosionSlider {
         const planetOpacity = this.explosionTriggered ? 0 : 1;
         const planetScale = 1;
         
+        // Update core position if explosion has happened
+        const aftermath = document.querySelector('.explosion-aftermath');
+        if (this.explosionTriggered && aftermath) {
+            const knobX = this.padding + (this.currentPosition * this.maxPosition);
+            const knobCenterX = knobX + (this.knobWidth / 2);
+            aftermath.style.left = `${knobCenterX}px`;
+            
+            // Core fades out as we drag back left
+            const coreOpacity = Math.max(0, (position - 0.2) * 2.5); // Fades from 20% to 0%
+            aftermath.style.opacity = coreOpacity;
+        } else if (aftermath) {
+            // Hide core completely if no explosion
+            aftermath.style.opacity = '0';
+            aftermath.style.display = 'none';
+        }
+        
         this.slider.style.setProperty('--planet-opacity', planetOpacity);
         this.slider.style.setProperty('--planet-scale', planetScale);
         this.slider.style.setProperty('--explosion-opacity', 0);
@@ -157,8 +191,12 @@ class ZebesExplosionSlider {
         // Show planet core at current knob position
         const knobX = this.padding + (this.currentPosition * this.maxPosition);
         const knobCenterX = knobX + (this.knobWidth / 2);
-        this.slider.style.setProperty('--aftermath-left', `${knobCenterX}px`);
-        this.slider.style.setProperty('--aftermath-opacity', '1');
+        const aftermath = document.querySelector('.explosion-aftermath');
+        if (aftermath) {
+            aftermath.style.display = 'block';
+            aftermath.style.left = `${knobCenterX}px`;
+            aftermath.style.opacity = '1';
+        }
         
         setTimeout(() => {
             this.animateExplosionParticles();
@@ -252,7 +290,11 @@ class ZebesExplosionSlider {
         this.slider.style.setProperty('--explosion-opacity', '0');
         this.slider.style.setProperty('--explosion-rings-opacity', '0');
         this.slider.style.setProperty('--flash-opacity', '0');
-        this.slider.style.setProperty('--aftermath-opacity', '0');
+        const aftermath = document.querySelector('.explosion-aftermath');
+        if (aftermath) {
+            aftermath.style.opacity = '0';
+            aftermath.style.display = 'none';
+        }
         
         const particles = document.querySelectorAll('.explosion-particle');
         particles.forEach(particle => {

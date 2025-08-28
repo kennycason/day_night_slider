@@ -235,11 +235,16 @@ h1 {
     background: radial-gradient(circle, rgba(255, 100, 50, 0.8) 0%, rgba(255, 150, 0, 0.6) 30%, rgba(200, 50, 0, 0.4) 60%, transparent 100%);
     border-radius: 50%;
     transform: translate(-50%, -50%);
-    opacity: var(--aftermath-opacity, 0);
-    pointer-events: none;
+    opacity: 0;
+    pointer-events: auto;
+    cursor: grab;
     animation: aftermath-glow 3s ease-in-out infinite alternate;
     transition: left 0.1s ease, opacity 0.2s ease;
-    z-index: 5;
+    z-index: 15;
+}
+
+.explosion-aftermath:active {
+    cursor: grabbing;
 }
 
 .explosion-particle {

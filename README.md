@@ -19,3 +19,5 @@ Space-themed slider where Planet Zebes explodes into particles and leaves a glow
 
 
 Motivated by [this](https://www.reddit.com/r/programmingmemes/s/GB7uYTwpyD) Reddit post.
+
+Made with AI (Cursor)

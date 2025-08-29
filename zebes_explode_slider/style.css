@@ -184,7 +184,7 @@ h1 {
     height: 100%;
     border-radius: 50%;
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: opacity 0.8s ease, transform 0.3s ease;
     opacity: var(--planet-opacity, 1);
     transform: scale(var(--planet-scale, 1));
     border: none !important;

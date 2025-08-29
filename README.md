@@ -4,7 +4,7 @@
 
 Animated slider that smoothly transitions from sunny day to starry night with position-based animations, layered gradients, and floating clouds/twinkling stars.
 
-![day_night_slider/slider-day.png](day_night_slider/slider-day.png) ![day_night_slider/slider-night.png](day_night_slider/slider-night.png)
+<img src="day_night_slider/slider-day.png" width="55%" /><img src="day_night_slider/slider-night.png" width="45%" />
 
 🎥 [Watch Demo Video](day_night_slider/day-night-slider.mp4)
 
@@ -12,7 +12,8 @@ Animated slider that smoothly transitions from sunny day to starry night with po
 
 Space-themed slider where Planet Zebes explodes into particles and leaves a glowing core when dragged to the right, with smooth reset and fade-in effects.
 
-![zebes_explode_slider/slider-zebes.png](zebes_explode_slider/slider-zebes.png) ![zebes_explode_slider/slider-exploded.png](zebes_explode_slider/slider-exploded.png)
+<img src="zebes_explode_slider/slider-zebes.png" width="55%" /><img src="zebes_explode_slider/slider-exploded.png" width="45%" />
+
 
 🎥 [Watch Demo Video](zebes_explode_slider/zebes-explode-slider.mp4)
 
